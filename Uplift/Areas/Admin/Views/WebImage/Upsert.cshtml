@@ -1,0 +1,69 @@
+﻿@model Uplift.Models.WebImage
+@{
+    var title = "Create Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Upsert</h1>
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+    <div class="row px-2 mx-2 backgroundWhite border">
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+            @if (Model.Id != 0)
+            {
+                <input type="hidden" asp-for="Id" />
+                title = "Edit Image";
+            }
+        </div>
+        <h2 class="text-primary">@title</h2>
+        <br />
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Name"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger">
+
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row">
+                
+                <div class="col-8">
+                    <input type="file" multiple name="files" id="projectImage" class="form-control" />
+
+                </div>
+                @if (Model.Picture != null)
+                {
+                    <div class="col-4">
+                        @{ 
+                            var base64 = Convert.ToBase64String(Model.Picture);
+                            var imgSrc = string.Format("data:image/jpg;base64,{0}", base64);
+                        }
+                        <img src="@imgSrc" height="100%" width="100%"/>
+                    </div>
+
+                    }
+            </div>
+            <div class="form-group row">
+
+                <div class="col-8 offset-4">
+                    @if (Model.Id != 0)
+                    {
+                        //Edit button
+                        <partial name="_EditAndBackToListButton" model="Model.Id" />
+                    }
+                    else
+                    {
+                        <partial name="_CreateAndBackToListButton" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+@section Scripts{
+    <script src="~/js/category.js"></script>
+}

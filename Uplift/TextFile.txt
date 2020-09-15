@@ -1,0 +1,3 @@
+﻿hasznos parancsok:
+add-migration
+update-database
